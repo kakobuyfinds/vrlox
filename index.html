@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#243b53">
+  <title>ACBuy Spreadsheet: Funde, Größen &amp; QC verständlich prüfen</title>
+  <meta name="description" content="ACBuy Spreadsheet auf Deutsch: Kategorien entdecken, Größen vergleichen, QC-Fotos einordnen und Produktlinks prüfen. Mit Checklisten und kurzen Antworten.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="de_DE">
+  <meta property="og:title" content="ACBuy Spreadsheet – erst vergleichen, dann entscheiden">
+  <meta property="og:description" content="Ein kompakter Leitfaden für Produktfunde, Maße, Bildprüfung und nachvollziehbare Kaufentscheidungen.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="ACBuy Spreadsheet – der deutsche Einkaufsleitfaden">
+  <meta name="twitter:description" content="Kategorien, Größenvergleich und QC-Fotos verständlich erklärt.">
+  <link rel="preconnect" href="shkuze.jp">
+  <style>
+    :root{
+      color-scheme:light;
+      --paper:#f5f1e9;
+      --white:#fffdf8;
+      --ink:#182c3d;
+      --muted:#536272;
+      --blue:#243b53;
+      --accent:#a74730;
+      --line:#d9d6cd;
+      --yellow:#eadb98;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.7}
+    a{color:inherit;text-underline-offset:4px}
+    a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+    img{display:block;width:100%;height:auto}
+    h1,h2,h3,p,figure{margin:0}
+    h1,h2,h3{line-height:1.15;text-wrap:balance}
+    h1{font-size:clamp(2.8rem,6.2vw,5.6rem);letter-spacing:-.065em;font-weight:800}
+    h2{font-size:clamp(1.9rem,3.5vw,3rem);letter-spacing:-.04em}
+    h3{font-size:1.2rem;letter-spacing:-.02em}
+    p{max-width:70ch}
+    .wrap{width:min(1180px,calc(100% - 40px));margin-inline:auto}
+    .topline{background:var(--blue);color:white;font-size:.78rem;letter-spacing:.07em}
+    .topline .wrap{display:flex;justify-content:space-between;gap:14px;padding-block:9px}
+    .header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:25px}
+    .brand{font-size:1.35rem;font-weight:800;text-decoration:none;letter-spacing:-.04em}
+    .brand span{color:var(--accent)}
+    .header nav{display:flex;align-items:center;gap:24px;font-size:.9rem}
+    .header nav a{text-decoration:none}
+    .header nav a:hover{text-decoration:underline}
+    .edition{font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+    .categories{padding:22px 0 28px;border-block:1px solid var(--line)}
+    .section-top{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:16px}
+    .section-top h2{font-size:1rem;letter-spacing:0}
+    .section-top p{font-size:.78rem;color:var(--muted)}
+    .category-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
+    .category-grid a{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:65px;padding:12px 14px;border:1px solid var(--line);background:var(--white);text-decoration:none;border-radius:8px;transition:background .15s}
+    .category-grid a:hover{background:var(--yellow)}
+    .category-grid strong{display:block;font-size:.86rem}
+    .category-grid small{display:block;font-size:.68rem;color:var(--muted)}
+    .arrow{font-size:1.1rem}
+    .hero{display:grid;grid-template-columns:1.05fr 1fr;gap:54px;padding-block:58px;align-items:center}
+    .eyebrow{display:block;margin-bottom:18px;color:var(--accent);font-size:.75rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+    .hero h1 span{display:block;color:var(--accent)}
+    .hero .intro{margin-top:25px;font-size:1.06rem;color:var(--muted)}
+    .button{display:inline-flex;align-items:center;justify-content:center;gap:20px;margin-top:27px;padding:13px 23px;background:var(--blue);color:white;border-radius:6px;text-decoration:none;font-weight:700}
+    .button:hover{background:#365775}
+    .hero-note{margin-top:14px;font-size:.77rem;color:var(--muted)}
+    .hero-photo{position:relative;background:white;border:1px solid var(--line);padding:18px;border-radius:var(--radius)}
+    .hero-photo img{height:390px;object-fit:contain}
+    figcaption{padding-top:13px;font-size:.73rem;color:var(--muted);line-height:1.6}
+    .photo-label{position:absolute;top:22px;left:22px;background:var(--yellow);padding:6px 10px;font-size:.68rem;font-weight:800;letter-spacing:.08em}
+    .answer{display:grid;grid-template-columns:220px 1fr;gap:30px;background:var(--blue);color:white;padding:30px 34px;border-radius:var(--radius)}
+    .answer h2{font-size:1.2rem;letter-spacing:-.02em}
+    .answer p{font-size:.96rem;color:#e1e8ef}
+    .content-section{padding-block:64px;border-bottom:1px solid var(--line)}
+    .section-heading{display:grid;grid-template-columns:1fr 1fr;gap:35px;margin-bottom:30px}
+    .section-heading p{color:var(--muted);align-self:end}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+    .step{padding-top:20px;border-top:3px solid var(--blue)}
+    .number{display:block;color:var(--accent);font-weight:800;font-size:.75rem;margin-bottom:19px}
+    .step p{font-size:.89rem;color:var(--muted);margin-top:12px}
+    .editorial{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .feature{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
+    .feature-image{height:280px;object-fit:cover;background:#eee}
+    .feature-body{padding:27px}
+    .feature-body p{font-size:.93rem;color:var(--muted);margin-top:15px}
+    .feature-body h3{font-size:1.5rem}
+    .caption{font-size:.71rem!important}
+    .text-link{display:inline-block;margin-top:18px;font-size:.88rem;font-weight:700;color:var(--accent)}
+    .table-box{overflow-x:auto;background:var(--white);border:1px solid var(--line);border-radius:var(--radius)}
+    table{width:100%;border-collapse:collapse;min-width:610px;font-size:.9rem;text-align:left}
+    caption{text-align:left;padding:20px 22px;font-size:.8rem;color:var(--muted)}
+    th,td{padding:17px 22px;border-top:1px solid var(--line);vertical-align:top}
+    thead{background:#e8e9e3}
+    th{font-weight:700}
+    td{color:var(--muted)}
+    .journal{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+    .journal article{padding:24px;background:var(--white);border-top:4px solid var(--accent)}
+    .journal article p{font-size:.9rem;color:var(--muted);margin-top:15px}
+    .tag{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:14px;font-weight:700}
+    .accessory{display:grid;grid-template-columns:280px 1fr;gap:38px;align-items:center;margin-top:32px;background:#e9e5da;border-radius:var(--radius);padding:26px}
+    .accessory img{height:230px;object-fit:contain}
+    .accessory p{margin-top:14px;font-size:.91rem;color:var(--muted)}
+    .faq-layout{display:grid;grid-template-columns:.65fr 1.35fr;gap:55px}
+    .faq-intro p{margin-top:20px;color:var(--muted);font-size:.92rem}
+    details{border-bottom:1px solid var(--line)}
+    summary{cursor:pointer;padding:20px 28px 20px 0;font-weight:700;line-height:1.5}
+    details p{padding:0 0 22px;color:var(--muted);font-size:.92rem}
+    .closing{padding:45px 0}
+    .closing-inner{display:flex;align-items:center;justify-content:space-between;gap:30px}
+    .closing h2{font-size:1.9rem}
+    .closing p{margin-top:9px;color:var(--muted);font-size:.91rem}
+    .closing .button{margin:0;flex-shrink:0}
+    footer{background:var(--blue);color:#e1e8ef;padding:33px 0;font-size:.76rem}
+    .footer-row{display:flex;justify-content:space-between;gap:28px}
+    footer p{max-width:85ch;margin-top:12px;color:#c4cfda}
+    footer a{font-weight:700}
+    @media(max-width:900px){
+      .category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .hero{gap:28px}
+      .hero-photo img{height:310px}
+      .steps{grid-template-columns:repeat(2,1fr)}
+      .journal{grid-template-columns:1fr}
+      .faq-layout{grid-template-columns:1fr;gap:25px}
+    }
+    @media(max-width:620px){
+      .wrap{width:calc(100% - 30px)}
+      .topline .wrap{font-size:.67rem}
+      .topline .wrap span:last-child{display:none}
+      .header{padding-block:19px}
+      .header nav{gap:14px;font-size:.79rem}
+      .edition{display:none}
+      .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .category-grid a{padding:10px;min-height:62px}
+      .section-top{display:block}
+      .section-top p{margin-top:6px}
+      .hero{grid-template-columns:1fr;padding-block:35px;gap:30px}
+      .hero-photo img{height:290px}
+      .hero .intro{font-size:1rem}
+      .answer{grid-template-columns:1fr;padding:25px;gap:15px}
+      .content-section{padding-block:42px}
+      .section-heading,.editorial{grid-template-columns:1fr;gap:20px}
+      .steps{gap:22px 18px}
+      .step h3{font-size:1.06rem}
+      .feature-image{height:250px}
+      .accessory{grid-template-columns:1fr;gap:20px;padding:22px}
+      .accessory img{height:210px}
+      .closing-inner,.footer-row{display:block}
+      .closing .button{margin-top:20px}
+      .footer-row span{display:block;margin-top:12px}
+    }
+    @media(prefers-reduced-motion:reduce){
+      *{transition:none!important}
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebPage",
+        "@id":"#seite",
+        "name":"ACBuy Spreadsheet: Funde, Größen und QC verständlich prüfen",
+        "description":"Deutschsprachiger Leitfaden zum Vergleichen von Produktlinks, Größenangaben und QC-Fotos.",
+        "inLanguage":"de",
+        "about":{"@type":"Thing","name":"ACBuy Spreadsheet"},
+        "hasPart":[
+          {"@id":"#artikel-groessen"},
+          {"@id":"#artikel-qc"},
+          {"@id":"#artikel-links"},
+          {"@id":"#fragen"}
+        ]
+      },
+      {
+        "@type":"Article",
+        "@id":"#artikel-groessen",
+        "headline":"Größentabellen lesen: Zentimeter vor Buchstaben",
+        "inLanguage":"de",
+        "articleBody":"Für einen Hoodie die Brustweite messen, bei T-Shirts die Länge vergleichen und bei Hosen Bundweite und Innenbeinlänge prüfen. Ein passendes Kleidungsstück flach auslegen und die Messpunkte der jeweiligen Größentabelle übernehmen. Größenbezeichnungen allein reichen für einen verlässlichen Vergleich nicht aus."
+      },
+      {
+        "@type":"Article",
+        "@id":"#artikel-qc",
+        "headline":"QC-Fotos verstehen: Was Bilder tatsächlich zeigen",
+        "inLanguage":"de",
+        "articleBody":"QC-Fotos können sichtbare Merkmale wie Nähte, Farbe und Form dokumentieren. Perspektive, Beleuchtung und Aufnahmezeitpunkt beachten. Fehlende Detailaufnahmen anfordern, bevor eine Entscheidung fällt. Ein Foto allein bestätigt weder Echtheit noch langfristige Haltbarkeit."
+      },
+      {
+        "@type":"Article",
+        "@id":"#artikel-links",
+        "headline":"Produktlinks prüfen: Die Variante entscheidet",
+        "inLanguage":"de",
+        "articleBody":"Bei Taobao-Links die Variante prüfen, bei Weidian-Angeboten die Verkäuferangaben lesen und bei 1688-Artikeln mögliche Mindestmengen beachten. Artikelbezeichnung, Farbe, Größe und Modellnummer in einer eigenen Vergleichsliste festhalten. Ein gespeicherter Link garantiert keine dauerhafte Verfügbarkeit."
+      },
+      {
+        "@type":"FAQPage",
+        "@id":"#fragen",
+        "inLanguage":"de",
+        "mainEntity":[
+          {
+            "@type":"Question",
+            "name":"Was ist ein ACBuy Spreadsheet?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Ein ACBuy Spreadsheet ist eine unter diesem Suchbegriff geführte Sammlung von Produktverweisen. Sie hilft bei der Recherche, ersetzt aber weder die aktuelle Produktseite noch die Prüfung von Verkäufer, Variante und Konditionen."
+            }
+          },
+          {
+            "@type":"Question",
+            "name":"Wie finde ich passende Schuhe im ACBuy Spreadsheet?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Starte mit der Schuhkategorie und grenze Modell, Farbe und Größe ein. Vergleiche Fußlänge und modellspezifische Größentabelle; bei unklarer Passform frage nach zusätzlichen Maßen."
+            }
+          },
+          {
+            "@type":"Question",
+            "name":"Beweisen QC-Fotos die Echtheit eines Markenartikels?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Nein. QC-Fotos zeigen sichtbare Details zum Aufnahmezeitpunkt. Für eine Echtheitsprüfung sind nachvollziehbare Herkunft, Belege und gegebenenfalls eine fachkundige Prüfung erforderlich."
+            }
+          },
+          {
+            "@type":"Question",
+            "name":"Kann ich alte ACBuy-Links noch verwenden?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Ein älterer Produktlink kann weiterhin erreichbar sein. Prüfe dennoch Artikel, Bestand und Variante erneut und kläre direkt beim jeweiligen Dienst, ob der Link aktuell unterstützt wird."
+            }
+          },
+          {
+            "@type":"Question",
+            "name":"Wie vergleiche ich die Gesamtkosten?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Erfasse Artikelpreis, Inlandsversand, Servicegebühren, internationalen Versand und mögliche Einfuhrabgaben getrennt. Notiere Währung und Datum, damit unterschiedliche Angebote vergleichbar bleiben."
+            }
+          },
+          {
+            "@type":"Question",
+            "name":"Ist diese Seite ein offizielles Angebot von ACBuy?",
+            "acceptedAnswer":{
+              "@type":"Answer",
+              "text":"Nein. Dies ist ein unabhängiger deutschsprachiger Leitfaden. Die Kategorieverweise führen zu cafans.com; allgemeine Verweise führen zur Startseite von cafans.com."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+  <!--
+    Datei: index.html
+    Redaktionelle Recherche vom 06.11.2026.
+    Google zeigte bei der abgefragten ersten Ergebnisseite neun organische
+    Treffer. Ausgewertet wurden sichtbare Titel und Suchbeschreibungen.
+    Volltexte waren nur teilweise zugänglich. Der zehnte Bezug stammt aus
+    einer ergänzenden Websuche; eine vollständige Google-Top-10-Auswertung
+    wird deshalb nicht behauptet.
+
+    Recherchebezüge und erkennbare Themen:
+    1. Instagram / acb.finds: Funde, QC, Gewicht.
+    2. acspreadsheets.com: Quellenprüfung, Kategorien, Maße, Bildbelege.
+    3. acbuyfindspreadsheet.net: Größenhinweise, QC, Kategorien.
+    4. acbuy-spreadsheetbest.com: Taobao, Weidian, 1688, Produktlinks.
+    5. acbuying2026.com: Modekategorien, Einkaufsablauf.
+    6. acbuydocs.com: Kategorien, QC und Hinweise auf Bestellpausen.
+    7. allchinabuyspreadsheets.store: Produktsuche und Kategorien.
+    8. acbuyspreadsheets.cn: QC-Bilder und Einkaufsressourcen.
+    9. zentbuylinks.com: Modefunde, Verkäufer und Bildvergleich.
+    10. acbuy.net: unabhängige Produktsuche und Kaufvorbereitung.
+
+    Primärbegriff: ACBuy spreadsheet.
+    Vier ergänzende Themenbegriffe:
+    ACBuy Funde; ACBuy Größenvergleich; ACBuy QC-Fotos;
+    ACBuy Produktlinks.
+    Langfristige Verfügbarkeit, Preise, Bewertungen und offizielle
+    Markenbeziehungen werden nicht aus fremden Werbeaussagen übernommen.
+    Kein Canonical auf eine fremde oder noch unbekannte Veröffentlichungs-URL.
+  -->
+<link rel="canonical" href="https://kakobuyfinds.github.io/vrlox/">
+</head>
+<body>
+  <div class="topline">
+    <div class="wrap">
+      <span>DER KLEINE LEITFADEN FÜR BESSERE PRODUKTRECHERCHE</span>
+      <span>DEUTSCH · AUSGABE 01</span>
+    </div>
+  </div>
+
+  <header class="wrap header">
+    <a class="brand" href="https://www.cafans.com" aria-label="cafans.com öffnen">cafans<span>.com</span></a>
+    <span class="edition">Funde &amp; Fakten</span>
+    <nav aria-label="Hauptnavigation">
+      <a href="https://www.cafans.com">Produkte entdecken ↗</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="categories" aria-labelledby="kategorien-titel">
+      <div class="wrap">
+        <div class="section-top">
+          <h2 id="kategorien-titel">Direkt zur passenden Kategorie</h2>
+          <p>Die Auswahl öffnet die jeweilige Kategorie auf cafans.com.</p>
+        </div>
+        <nav class="category-grid" aria-label="Produktkategorien">
+          <a href="https://cafans.com/category-911-Shoes.html">
+            <span><strong>Schuhe</strong><small lang="en">Shoes</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-912-Hoodies%2FSweaters.html">
+            <span><strong>Hoodies &amp; Pullover</strong><small lang="en">Hoodies/Sweaters</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-913-T-Shirts.html">
+            <span><strong>T-Shirts</strong><small>Basics &amp; bedruckte Shirts</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-914-Jackets.html">
+            <span><strong>Jacken</strong><small lang="en">Jackets</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-915-Pants%2FShorts.html">
+            <span><strong>Hosen &amp; Shorts</strong><small lang="en">Pants/Shorts</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-916-Headwear.html">
+            <span><strong>Mützen &amp; Caps</strong><small lang="en">Headwear</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-917-Sets.html">
+            <span><strong>Sets</strong><small>Abgestimmte Kombinationen</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-918-underwear%2Funderpants.html">
+            <span><strong>Unterwäsche</strong><small lang="en">Underwear/underpants</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-919-Jersey.html">
+            <span><strong>Trikots</strong><small lang="en">Jersey</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+          <a href="https://cafans.com/category-920-Accessories.html">
+            <span><strong>Accessoires</strong><small lang="en">Accessories</small></span><span class="arrow" aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+
+    <div class="wrap">
+      <section class="hero" aria-labelledby="haupttitel">
+        <div>
+          <span class="eyebrow">ACBuy Spreadsheet · verständlich auf Deutsch</span>
+          <h1 id="haupttitel">Gute Funde.<span>Klare Kriterien.</span></h1>
+          <p class="intro">Ein schönes Produktbild ist der Anfang. Dieser ACBuy Spreadsheet-Leitfaden hilft dir, Größenangaben, Produktlinks und QC-Fotos so zu lesen, dass aus einer spontanen Idee eine nachvollziehbare Auswahl wird.</p>
+          <a class="button" href="https://www.cafans.com">Bei cafans stöbern <span aria-hidden="true">↗</span></a>
+          <p class="hero-note">Unabhängige Orientierung. Kategorien und allgemeine Verweise führen zu cafans.com.</p>
+        </div>
+        <figure class="hero-photo">
+          <span class="photo-label">FORM · MATERIAL · DETAILS</span>
+          <img src="https://shkuze.jp/html/upload/save_image/0719144659_62d64553156b7.jpg"
+               width="720" height="480"
+               alt="Weiße Louis Vuitton × Nike Air Force 1 Low mit geprägten Details"
+               loading="eager" fetchpriority="high" decoding="async">
+          <figcaption>Bildreferenz: Louis Vuitton × Nike Air Force 1. Sie illustriert Form und Oberflächen; daraus folgt keine Aussage über das Sortiment bei cafans.</figcaption>
+        </figure>
+      </section>
+
+      <aside class="answer" aria-labelledby="kurzantwort">
+        <h2 id="kurzantwort">Was bringt eine solche Übersicht?</h2>
+        <p>Ein <strong>ACBuy Spreadsheet</strong> bündelt Produktverweise für die Recherche. Nützlich wird es durch überprüfbare Angaben zu Quelle, Variante und Maßen. Ob ein Produkt verfügbar ist und ein Dienst Bestellungen annimmt, musst du jeweils aktuell prüfen.</p>
+      </aside>
+
+      <section class="content-section" aria-labelledby="funde-titel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">01 / Die Auswahl eingrenzen</span>
+            <h2 id="funde-titel">ACBuy Funde mit einem Plan vergleichen</h2>
+          </div>
+          <p>Beginne mit einem konkreten Bedarf. Drei gut dokumentierte Optionen lassen sich leichter beurteilen als eine lange Liste ohne Vergleichsmaßstab.</p>
+        </div>
+        <div class="steps">
+          <article class="step">
+            <span class="number">01 / KATEGORIE</span>
+            <h3>Den Einsatz festlegen</h3>
+            <p>Für <strong>Sneaker für den Alltag</strong> zählen Passform und Sohlenform. Bei <strong>Hoodies für mehrere Kleidungsschichten</strong> sind Schnitt und Platz unter der Jacke entscheidend.</p>
+          </article>
+          <article class="step">
+            <span class="number">02 / VARIANTE</span>
+            <h3>Dasselbe vergleichen</h3>
+            <p>Notiere Modell, Farbe und Größe. Wer <strong>schwarze T-Shirts vergleichen</strong> oder <strong>passende Trainingssets finden</strong> möchte, braucht Angaben zur konkreten Ausführung.</p>
+          </article>
+          <article class="step">
+            <span class="number">03 / BELEGE</span>
+            <h3>Offene Fragen markieren</h3>
+            <p>Für <strong>Jacken mit Futter auswählen</strong> hilft ein Innenfoto; für <strong>Caps mit verstellbarem Verschluss</strong> eine Rückansicht. Fehlende Informationen bleiben offene Punkte.</p>
+          </article>
+          <article class="step">
+            <span class="number">04 / ENTSCHEIDUNG</span>
+            <h3>Die Auswahl begründen</h3>
+            <p>Beim <strong>Trikot für Sport oder Freizeit</strong> unterscheiden sich die Anforderungen. Auch <strong>Accessoires nach Material auswählen</strong> gelingt besser mit klaren Kriterien.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="bildvergleich-titel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">02 / Das Auge schulen</span>
+            <h2 id="bildvergleich-titel">Stil erkennen. Details hinterfragen.</h2>
+          </div>
+          <p>Markenbilder dienen hier als Anschauungsmaterial. Sie sind keine überprüften Angebote und kein Beleg für eine Verbindung zwischen den Marken und dieser Seite.</p>
+        </div>
+        <div class="editorial">
+          <article class="feature">
+            <img class="feature-image"
+                 src="https://assets.gqindia.com/photos/61a444d02271d8fcf8b175a2/1%3A1/w_1600%2Cc_limit/top-image-4.jpg"
+                 width="640" height="640"
+                 alt="Sneaker-Collage mit Modellen von Gucci, Louis Vuitton, Nike und Dior"
+                 loading="lazy" decoding="async">
+            <div class="feature-body">
+              <span class="tag">Sneaker / Proportionen</span>
+              <h3>Nicht nur das Logo betrachten</h3>
+              <p>Wenn du <strong>Sneaker anhand von Seitenansichten vergleichen</strong> möchtest, achte auf Zehenform, Sohlenhöhe und Fersenpartie. Für <strong>Schuhmaterial auf Fotos beurteilen</strong> helfen Nahaufnahmen; Tragegefühl und Haltbarkeit bleiben dabei offen.</p>
+              <p class="caption">Bildreferenz: GQ India. Gezeigte Markenmodelle dienen dem visuellen Vergleich.</p>
+              <a class="text-link" href="https://www.cafans.com">Weitere Produktideen ansehen ↗</a>
+            </div>
+          </article>
+          <article class="feature">
+            <img class="feature-image"
+                 src="https://assets.christiandior.com/is/image/diorprod/593C913A3016C585_E01?%24default_GHC%24=&amp;bfc=on&amp;crop=382%2C648%2C1032%2C770&amp;hei=520&amp;qlt=75&amp;scale=0.875&amp;wid=640"
+                 width="640" height="520"
+                 alt="Hellblaue Dior Oblique Cap mit gemustertem Stoff und gebogenem Schirm"
+                 loading="lazy" decoding="async">
+            <div class="feature-body">
+              <span class="tag">Kopfbedeckungen / Passform</span>
+              <h3>Die Maße hinter dem Motiv</h3>
+              <p>Für <strong>Caps nach Kopfumfang auswählen</strong> brauchst du den Größenbereich des Modells. Beim <strong>Verschluss einer Cap prüfen</strong> zählt die Rückseite ebenso wie das Frontbild. Eine Innenansicht kann zusätzliche Hinweise auf Futter und Verarbeitung geben.</p>
+              <p class="caption">Bildreferenz: Dior. Keine Zusage zur Verfügbarkeit über die verlinkten Kategorien.</p>
+              <a class="text-link" href="https://www.cafans.com">Die Auswahl bei cafans öffnen ↗</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="vergleich-titel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">03 / Die Vergleichsgrundlage</span>
+            <h2 id="vergleich-titel">ACBuy Größenvergleich: Welche Angaben fehlen noch?</h2>
+          </div>
+          <p>Lege ein passendes eigenes Kleidungsstück daneben. Vergleiche dieselben Messpunkte und beachte, ob die Tabelle flache Breiten oder vollständige Umfänge nennt.</p>
+        </div>
+        <div class="table-box">
+          <table>
+            <caption>Praktische Vergleichsfelder für deine eigene Merkliste</caption>
+            <thead>
+              <tr>
+                <th scope="col">Produktgruppe</th>
+                <th scope="col">Sinnvoller Vergleich</th>
+                <th scope="col">Noch zu klären</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Hoodies &amp; T-Shirts</th>
+                <td>Brustweite, Länge und Schulterbreite</td>
+                <td>Messmethode, Stoffzusammensetzung und gewünschte Passform</td>
+              </tr>
+              <tr>
+                <th scope="row">Hosen &amp; Shorts</th>
+                <td>Bundweite, Leibhöhe und Innenbeinlänge</td>
+                <td>Elastischer oder fester Bund; Beinweite der gewählten Größe</td>
+              </tr>
+              <tr>
+                <th scope="row">Schuhe</th>
+                <td>Fußlänge und Größentabelle des konkreten Modells</td>
+                <td>Breite, Innenraum und abweichende Größenbezeichnungen</td>
+              </tr>
+              <tr>
+                <th scope="row">Sets &amp; Trikots</th>
+                <td>Oberteil und Unterteil getrennt messen</td>
+                <td>Unterschiedliche Schnitte oder Größensysteme</td>
+              </tr>
+              <tr>
+                <th scope="row">Unterwäsche</th>
+                <td>Bundmaß, Schnitt und Materialangaben</td>
+                <td>Passform sowie die jeweiligen Rückgabebedingungen</td>
+              </tr>
+              <tr>
+                <th scope="row">Accessoires</th>
+                <td>Abmessungen, Gewicht und Verschluss</td>
+                <td>Materialnachweise und fehlende Detailaufnahmen</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="content-section" aria-labelledby="journal-titel">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">04 / Drei kurze Ratgeber</span>
+            <h2 id="journal-titel">Vom Fund zur überprüfbaren Auswahl</h2>
+          </div>
+          <p>Lesbare Notizen helfen mehr als ein bloß gespeicherter Link. Halte fest, was bekannt ist und welche Frage deine Entscheidung noch beeinflusst.</p>
+        </div>
+        <div class="journal">
+          <article id="artikel-groessen">
+            <span class="tag">Ratgeber / Maße</span>
+            <h3>Größentabellen lesen: Zentimeter vor Buchstaben</h3>
+            <p>Für einen <strong>Hoodie die Brustweite messen</strong>, bei <strong>T-Shirts die Länge vergleichen</strong> und bei <strong>Hosen Bundweite und Innenbeinlänge prüfen</strong>: Diese Angaben sind aussagekräftiger als S, M oder L allein.</p>
+            <p>Lege ein passendes Kleidungsstück flach aus und übernimm die Messpunkte der jeweiligen Tabelle. Für <strong>Oversize-Passform richtig einschätzen</strong> hilft der Vergleich mit einem eigenen weiten Oberteil. Rechne nicht pauschal eine Größe hinzu.</p>
+          </article>
+          <article id="artikel-qc">
+            <span class="tag">Ratgeber / ACBuy QC-Fotos</span>
+            <h3>QC-Fotos verstehen: Was Bilder tatsächlich zeigen</h3>
+            <p>Wer <strong>QC-Fotos vor dem Versand prüfen</strong> möchte, sollte Perspektive und Beleuchtung beachten. Zum <strong>Nähte auf Detailbildern vergleichen</strong> braucht es scharfe Nahaufnahmen. Beim <strong>Farben unter unterschiedlichem Licht beurteilen</strong> bleiben Abweichungen möglich.</p>
+            <p>Bitte gezielt um fehlende Ansichten, statt aus einem einzigen Bild zu schließen. Fotos dokumentieren sichtbare Merkmale zum Aufnahmezeitpunkt; sie bestätigen weder Echtheit noch langfristige Haltbarkeit.</p>
+          </article>
+          <article id="artikel-links">
+            <span class="tag">Ratgeber / ACBuy Produktlinks</span>
+            <h3>Produktlinks prüfen: Die Variante entscheidet</h3>
+            <p>Bei <strong>Taobao-Links die Variante prüfen</strong>, bei <strong>Weidian-Angeboten die Verkäuferangaben lesen</strong> und bei <strong>1688-Artikeln mögliche Mindestmengen beachten</strong>. Notiere Artikelbezeichnung, Farbe, Größe und Modellnummer.</p>
+            <p>Für <strong>alte Produktlinks erneut kontrollieren</strong> gilt: Seite öffnen und aktuelle Angaben neu prüfen. Eine gespeicherte Zeile garantiert weder Bestand noch unveränderte Konditionen. Ob ein Dienst den Link unterstützt, klärst du direkt dort.</p>
+          </article>
+        </div>
+
+        <aside class="accessory" aria-labelledby="accessoire-titel">
+          <figure>
+            <img src="https://www.luxe-em.com/cdn/shop/files/001_3e78aa64-04f3-4ec6-81eb-e3aad7cdb5bc.jpg?v=1759779439&amp;width=480"
+                 width="480" height="480"
+                 alt="Orangefarbenes Hermès Seidentuch mit symmetrischem Schlüsselmotiv"
+                 loading="lazy" decoding="async">
+            <figcaption>Bildreferenz: Luxe &amp; Em, Hermès-Tuch mit Schlüsselmotiv.</figcaption>
+          </figure>
+          <div>
+            <span class="tag">Zusätzlicher Blick / Accessoires</span>
+            <h3 id="accessoire-titel">Ein Muster ersetzt keine Materialangabe</h3>
+            <p>Beim <strong>Seidentuch nach Abmessungen auswählen</strong> zählt das Format genauso wie das Motiv. Zum <strong>Schmuckverschluss auf Fotos prüfen</strong> brauchst du eine Detailansicht; für <strong>Materialangaben bei Accessoires vergleichen</strong> eine nachvollziehbare Beschreibung. Bilder allein belegen keine Materialzusammensetzung.</p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="content-section faq-layout" aria-labelledby="faq-titel">
+        <div class="faq-intro">
+          <span class="eyebrow">05 / Direkt beantwortet</span>
+          <h2 id="faq-titel">Die häufigsten Fragen</h2>
+          <p>Kurze Antworten zu Produktübersichten, Bildprüfung und Kosten. Die tatsächlichen Konditionen ergeben sich aus dem jeweiligen aktuellen Angebot.</p>
+        </div>
+        <div id="fragen">
+          <details open>
+            <summary>Was ist ein ACBuy Spreadsheet?</summary>
+            <p>Ein ACBuy Spreadsheet ist eine unter diesem Suchbegriff geführte Sammlung von Produktverweisen. Sie hilft bei der Recherche, ersetzt aber weder die aktuelle Produktseite noch die Prüfung von Verkäufer, Variante und Konditionen.</p>
+          </details>
+          <details>
+            <summary>Wie finde ich passende Schuhe im ACBuy Spreadsheet?</summary>
+            <p>Starte mit der Schuhkategorie und grenze Modell, Farbe und Größe ein. Vergleiche Fußlänge und modellspezifische Größentabelle; bei unklarer Passform frage nach zusätzlichen Maßen.</p>
+          </details>
+          <details>
+            <summary>Beweisen QC-Fotos die Echtheit eines Markenartikels?</summary>
+            <p>Nein. QC-Fotos zeigen sichtbare Details zum Aufnahmezeitpunkt. Für eine Echtheitsprüfung sind nachvollziehbare Herkunft, Belege und gegebenenfalls eine fachkundige Prüfung erforderlich.</p>
+          </details>
+          <details>
+            <summary>Kann ich alte ACBuy-Links noch verwenden?</summary>
+            <p>Ein älterer Produktlink kann weiterhin erreichbar sein. Prüfe dennoch Artikel, Bestand und Variante erneut und kläre direkt beim jeweiligen Dienst, ob der Link aktuell unterstützt wird.</p>
+          </details>
+          <details>
+            <summary>Wie vergleiche ich die Gesamtkosten?</summary>
+            <p>Erfasse Artikelpreis, Inlandsversand, Servicegebühren, internationalen Versand und mögliche Einfuhrabgaben getrennt. Notiere Währung und Datum, damit unterschiedliche Angebote vergleichbar bleiben.</p>
+          </details>
+          <details>
+            <summary>Ist diese Seite ein offizielles Angebot von ACBuy?</summary>
+            <p>Nein. Dies ist ein unabhängiger deutschsprachiger Leitfaden. Die Kategorieverweise führen zu cafans.com; allgemeine Verweise führen zur Startseite von cafans.com.</p>
+          </details>
+        </div>
+      </section>
+
+      <section class="closing" aria-labelledby="abschluss-titel">
+        <div class="closing-inner">
+          <div>
+            <h2 id="abschluss-titel">Dein nächster Fund beginnt mit einer guten Frage.</h2>
+            <p>Wähle eine Kategorie, vergleiche die Angaben und behalte die offenen Punkte im Blick.</p>
+          </div>
+          <a class="button" href="https://www.cafans.com">cafans.com entdecken <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footer-row">
+        <a href="https://www.cafans.com">cafans.com</a>
+        <span>Unabhängiger Leitfaden · Deutsch · Redaktioneller Stand: 6. November 2026</span>
+      </div>
+      <p>ACBuy, Nike, Louis Vuitton, Gucci, Hermès und Dior sind Bezeichnungen ihrer jeweiligen Rechteinhaber. Es besteht keine behauptete offizielle Verbindung. Die Abbildungen dienen als Stil- und Detailreferenzen; sie sind keine Zusage zu Sortiment, Verfügbarkeit oder Echtheit verlinkter Artikel.</p>
+    </div>
+  </footer>
+</body>
+</html>
